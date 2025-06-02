@@ -6,7 +6,7 @@ from django.db import models
 from django.conf import settings
 from django.template import (Context, Template, loader)
 from django.core.mail import EmailMultiAlternatives, get_connection
-from django.core.files.storage import get_storage_class
+from django.core.files.storage import storages
 
 try:
     from django.utils.translation import ugettext_lazy as _
@@ -19,7 +19,9 @@ from simple_mail.fields import SimpleMailRichTextField
 from premailer import transform
 
 
-simple_mail_file_storage = get_storage_class(getattr(settings, 'SIMPLE_MAIL_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage'))()
+simple_mail_file_storage = storages[
+    (getattr(settings, 'SIMPLE_MAIL_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage'))
+]
 
 class SingletonModel(models.Model):
     singleton_instance_id = 1
