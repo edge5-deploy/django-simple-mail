@@ -19,8 +19,9 @@ from simple_mail.fields import SimpleMailRichTextField
 from premailer import transform
 
 
-simple_mail_file_storage = storages[
-    (getattr(settings, 'SIMPLE_MAIL_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage'))
+simple_mail_file_storage = storages.create_storage[
+    {'BACKEND': 'django.core.files.storage.FileSystemStorage'},
+    # (settings, 'SIMPLE_MAIL_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage')
 ]
 
 class SingletonModel(models.Model):
